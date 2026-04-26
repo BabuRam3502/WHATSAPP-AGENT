@@ -54,7 +54,6 @@ async function getAgentReply(phone, userMessage) {
   addToHistory(phone, "user", userMessage);
 
   let loopMessages = [...getHistory(phone)];
-
   let response;
 
   while (true) {
@@ -140,5 +139,11 @@ app.post("/webhook", async (req, res) => {
   }
 });
 
+// ─── Health check ──────────────────────────────────────────────────────────────
+app.get("/", (req, res) => {
+  res.send("WhatsApp agent is running!");
+});
+
 // ─── Start server ──────────────────────────────────────────────────────────────
-app.listen(3000, () => console.log("WhatsApp agent running on :3000"));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`WhatsApp agent running on :${PORT}`));
